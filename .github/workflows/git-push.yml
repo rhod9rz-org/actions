@@ -1,0 +1,36 @@
+name: GIT-PUSH
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Set permissions for github.token.
+# permissions: write-all
+
+jobs:
+
+  # Job 1 - Push to a remote repo using gh_pat
+  pushToRemoteRepo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone with PAT - Actions
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repository: rhod9rz-org/remote
+      - name: Push some code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          echo "Timestamp: $(date +'%Y-%m-%d %H:%M:%S')" >> test_file.txt
+          git add test_file.txt
+          git commit -m "Add test file for push testing (with timestamp)"
+          git push
