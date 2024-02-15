@@ -32,7 +32,8 @@ jobs:
         run: |
           git config --global user.email "rhod3rz@example.com"
           git config --global user.name "rhod3rz"
-          echo "timestamp: $(date +'%Y-%m-%d %H:%M:%S')" >> testfile.txt
+          timestamp=$(date +'%Y%m%d-%H:%M')
+          echo "$timestamp" >> testfile.txt
           git add testfile.txt
-          git commit -m "add test file for push testing (with timestamp)"
+          git commit -m "push to test file - $timestamp"
           git push
