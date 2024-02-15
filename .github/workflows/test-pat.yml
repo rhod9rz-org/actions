@@ -12,9 +12,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-jobs:
 
-  # This action is testing cloning a repo that is not itself.
+
+jobs:
 
   # Job 1 - Try to clone without using a PAT | This will FAIL
   noPat1:
