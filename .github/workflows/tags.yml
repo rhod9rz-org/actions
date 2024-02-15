@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - main
   pull_request:
     branches:
       - main
@@ -38,9 +39,9 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
           repository: rhod9rz-org/remote
-      # - name: Create a tag
-      #   env:
-      #     GITHUB_TOKEN: ${{ github.token }}
-      #   run: |
-      #     git tag test-tag-$(date +%s)
-      #     git push origin --tags
+      - name: Create a tag
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          git tag test-tag-$(date +%s)
+          git push origin --tags
