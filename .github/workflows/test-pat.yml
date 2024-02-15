@@ -1,0 +1,123 @@
+name: TEST-PAT
+
+on:
+  push:
+    branches:
+      - develop
+      # - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  # This action is testing cloning a repo that is not itself.
+
+  # Job 1 - Try to clone without using a PAT | This will FAIL
+  noPat1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone without PAT - Actions
+        uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
+          repository: rhod9rz-org/repo-240130-1343
+
+  # Job 2 - Try to clone without using a PAT | This will FAIL
+  noPat2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone without PAT - Git
+        run: |
+          git clone https://github.com/rhod9rz-org/repo-240130-1343.git
+          cd repo-240130-1343
+          ls -la
+          cat README.md
+
+  # Job 3 - Try to clone with using a PAT | This will SUCCEED
+  patWithAction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone with PAT - Actions
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repository: rhod9rz-org/repo-240130-1343
+
+  # Job 4 - Try to clone using the PAT token in the URL | This will SUCCEED
+  patInUrl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone using PAT token in URL
+        run: |
+          git clone https://${{ secrets.GH_PAT }}@github.com/rhod9rz-org/repo-240130-1343.git
+          cd repo-240130-1343
+          ls -la
+          cat README.md
+
+  # Job 5 - Try to clone with using the De-Vri-Es Action | This will SUCCEED
+  deVriEsAction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate
+        uses: de-vri-es/setup-git-credentials@v2
+        with:
+          credentials: https://whoisit:${{ secrets.GH_PAT }}@github.com # whoisit can be replaced by anything; it just needs a random name :-p
+      - name: Clone after using De-Vri-Es action
+        run: |
+          git clone https://github.com/rhod9rz-org/repo-240130-1343.git
+          cd repo-240130-1343
+          ls -la
+          cat README.md
+
+  # https://www.youtube.com/watch?v=xtXnIV20XQw
+  # App Name:     APP-BOE-PERMS-TO-OTHER-REPOS
+  # Homepage URL: https://github.com/
+  # Webhook:      Untick
+  # Repo Perms:   Contents > Read
+  # Install:      All Repos
+  # Private Key:  Create
+  # Org Secret:   APP_BOE_PERMS_TO_OTHER_REPOS_KEY (Paste private key & remove last line return)
+  # Org Variable: APP_BOE_PERMS_TO_OTHER_REPOS_ID (Paste the App ID e.g. 811896)
+
+  # Job 6 - Try to clone using a GitHub Application | This will SUCCEED
+  githubApplication1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Token
+        id: generate_token
+        uses: peter-murray/workflow-application-token-action@v3
+        with:
+          application_id: ${{ vars.APP_BOE_PERMS_TO_OTHER_REPOS_ID }}
+          application_private_key: ${{ secrets.APP_BOE_PERMS_TO_OTHER_REPOS_KEY }}
+      - name: Clone using token - Actions
+        uses: actions/checkout@v3
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+          repository: rhod9rz-org/repo-240130-1343
+
+  # Job 6 - Try to clone using a GitHub Application | This will SUCCEED
+  githubApplication2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Token
+        id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_BOE_PERMS_TO_OTHER_REPOS_ID }}
+          private-key: ${{ secrets.APP_BOE_PERMS_TO_OTHER_REPOS_KEY }}
+          owner: ${{ github.repository_owner }}
+      - name: Authenticate
+        uses: de-vri-es/setup-git-credentials@v2
+        with:
+          credentials: https://whoisit:${{ steps.generate_token.outputs.token }}@github.com # whoisit can be replaced by anything; it just needs a random name :-p
+      - name: Clone after getting GitHub token
+        run: |
+          git clone https://github.com/rhod9rz-org/repo-240130-1343.git
+          cd repo-240130-1343
+          ls -la
+          echo ${{ github.repository_owner }}
+          cat README.md
