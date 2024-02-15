@@ -28,3 +28,19 @@ jobs:
         run: |
           git tag test-tag-$(date +%s)
           git push origin --tags
+
+  # Job 2 - Create a tag for remote repo using gh_pat
+  tagRemoteRepo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone with PAT - Actions
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repository: rhod9rz-org/remote
+      # - name: Create a tag
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.token }}
+      #   run: |
+      #     git tag test-tag-$(date +%s)
+      #     git push origin --tags
