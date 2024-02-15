@@ -30,7 +30,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          echo "Timestamp: $(date +'%Y-%m-%d %H:%M:%S')" >> test_file.txt
-          git add test_file.txt
-          git commit -m "Add test file for push testing (with timestamp)"
+          git config --global user.email "rhod3rz@example.com"
+          git config --global user.name "rhod3rz"
+          echo "timestamp: $(date +'%Y-%m-%d %H:%M:%S')" >> testfile.txt
+          git add testfile.txt
+          git commit -m "add test file for push testing (with timestamp)"
           git push
