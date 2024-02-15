@@ -35,5 +35,5 @@ jobs:
           timestamp=$(date +'%y%m%d-%H%M')
           echo "$timestamp" >> testfile.txt
           git add testfile.txt
-          git commit -m "push to test file - $timestamp"
+          git commit -m "push to test file ($timestamp)"
           git push
