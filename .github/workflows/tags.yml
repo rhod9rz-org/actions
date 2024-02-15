@@ -1,4 +1,4 @@
-name: ALPHA
+name: TAGS
 
 on:
   push:
