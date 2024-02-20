@@ -17,7 +17,7 @@ on:
 
 jobs:
 
-  # Job 1 - Create a tag for remote repo using gh_pat
+  # Job 1 - Create a tag for remote repo.
   tagRemoteRepo:
     runs-on: ubuntu-latest
     steps:

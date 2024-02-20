@@ -17,8 +17,8 @@ permissions: write-all
 
 jobs:
 
-  # Job 1 - Create a tag for own repo using github.token.
-  tagOwnRepo:
+  # Job 1 - Create a tag for local repo.
+  tagLocalRepo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
