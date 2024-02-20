@@ -21,7 +21,7 @@ jobs:
   pushToRemoteRepo:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone with PAT - Actions
+      - name: Clone remote
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_PAT }}
