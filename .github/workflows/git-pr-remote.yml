@@ -31,7 +31,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }} # GH_TOKEN to authenticate with gh cli | GITHUB_TOKEN to authenticate with github actions.
           COMMIT_MESSAGE: "rdzCommitMessage"
           IMAGE_VERSION: ${{ github.run_id}}
-          PR_REVIEWER_ID: "rhod3rz"
+          PR_REVIEWER_ID: "rhod9rz"
         run: |
           gh auth status
           gh auth setup-git
