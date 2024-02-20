@@ -40,6 +40,7 @@ jobs:
           git checkout -b "feature/image-version-update-${timestamp}"
           git config --global user.email "rhod3rz@example.com"
           git config --global user.name "rhod3rz"
+          echo "$timestamp" >> testfile.txt
 
           echo "IMAGE_VERSION=$IMAGE_VERSION"
           echo "COMMIT_MESSAGE=$COMMIT_MESSAGE - ${timestamp}"
