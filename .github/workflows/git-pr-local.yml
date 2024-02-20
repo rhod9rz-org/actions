@@ -1,10 +1,10 @@
-name: GIT-PR-REMOTE
+name: GIT-PR-LOCAL
 
 on:
   push:
     branches:
       - develop
-      # - main
+      - main
   pull_request:
     branches:
       - main
@@ -18,14 +18,11 @@ on:
 jobs:
 
   # Job 1 - Push to a remote repo using gh_pat
-  prOnRemoteRepo:
+  prOnLocalRepo:
     runs-on: ubuntu-latest
     steps:
       - name: Clone with PAT - Actions
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_PAT }}
-          repository: rhod9rz-org/remote
       - name: Create a pr
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }} # GH_TOKEN to authenticate with gh cli | GITHUB_TOKEN to authenticate with github actions.
