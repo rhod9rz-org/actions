@@ -58,5 +58,5 @@ jobs:
           PR=$(gh pr create --title "$PR_TITLE [AUTOMATED]" \
                             --body "$PR_BODY" \
                             --reviewer $PR_REVIEWER_ID)
-          # echo $PR
+          echo $PR
           # echo "pr-url=$(echo $PR)" >> $GITHUB_OUTPUT
