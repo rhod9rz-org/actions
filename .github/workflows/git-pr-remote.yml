@@ -18,7 +18,7 @@ on:
 jobs:
 
   # Job 1 - Push to a remote repo using gh_pat
-  pushToRemoteRepo:
+  prOnRemoteRepo:
     runs-on: ubuntu-latest
     steps:
       - name: Clone with PAT - Actions
@@ -30,7 +30,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }} # GH_TOKEN to authenticate with gh cli | GITHUB_TOKEN to authenticate with github actions.
           COMMIT_MESSAGE: "rdzCommitMessage"
-          IMAGE_VERSION: ${{ github.GITHUB_RUN_ID}}
+          IMAGE_VERSION: ${{ github.run_id}}
           PR_REVIEWER_ID: "rhod3rz"
         run: |
           env
@@ -43,6 +43,7 @@ jobs:
           git config --global user.email "rhod3rz@example.com"
           git config --global user.name "rhod3rz"
 
+          echo "$GITHUB_RUN_ID"
           echo "IMAGE_VERSION=$IMAGE_VERSION"
           echo "COMMIT_MESSAGE=$COMMIT_MESSAGE - ${timestamp}"
           PR_TITLE=$(echo "$COMMIT_MESSAGE ${timestamp}" | head -n 1)
