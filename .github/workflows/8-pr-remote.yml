@@ -1,0 +1,62 @@
+name: 8-PR-REMOTE
+
+on:
+  push:
+    branches:
+      - develop
+      # - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Set permissions for github.token.
+# permissions: write-all
+
+jobs:
+
+  # Job 1 - Push to a remote repo using gh_pat
+  prOnRemoteRepo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone with PAT - Actions
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repository: rhod9rz-org/remote
+      - name: Create a pr
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }} # GH_TOKEN to authenticate with gh cli | GITHUB_TOKEN to authenticate with github actions.
+          COMMIT_MESSAGE: "rdzCommitMessage"
+          IMAGE_VERSION: ${{ github.run_id}}
+          PR_REVIEWER_ID: "rhod9rz"
+        run: |
+          gh auth status
+          gh auth setup-git
+          timestamp=$(date +'%y%m%d-%H%M')
+
+          git checkout -b "feature/image-version-update-${timestamp}"
+          git config --global user.email "rhod3rz@example.com"
+          git config --global user.name "rhod3rz"
+          echo "$timestamp" >> testfile.txt
+
+          echo "IMAGE_VERSION=$IMAGE_VERSION"
+          echo "COMMIT_MESSAGE=$COMMIT_MESSAGE - ${timestamp}"
+          PR_TITLE=$(echo "$COMMIT_MESSAGE ${timestamp}" | head -n 1)
+          echo "PR_TITLE=$PR_TITLE"
+          PR_BODY=$(echo "COMMIT_MESSAGE ${timestamp}" | tail -n +2)
+          PR_BODY="Update VM image version number -> $IMAGE_VERSION
+          Some Text: Rhodri
+          $PR_BODY"
+          echo "PR_BODY=$PR_BODY"
+
+          git add . && git commit -m "$PR_BODY"
+          git push -u origin "feature/image-version-update-${timestamp}"
+
+          PR=$(gh pr create --title "$PR_TITLE [AUTOMATED]" \
+                            --body "$PR_BODY" \
+                            --reviewer "$PR_REVIEWER_ID")
+          echo "The pull request link is $PR"
+          echo "pr-url=$(echo $PR)" >> $GITHUB_OUTPUT

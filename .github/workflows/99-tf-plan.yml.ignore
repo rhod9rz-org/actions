@@ -1,0 +1,28 @@
+name: TF-PLAN
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+
+
+jobs:
+
+  # Job 1 - Simulates environment settings.
+  tf-apply:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run terraform plan
+        run: echo terraform plan

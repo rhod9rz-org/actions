@@ -1,0 +1,24 @@
+name: 1-CLONE-LOCAL
+
+on:
+  push:
+    branches:
+      - develop
+      # - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+
+jobs:
+
+  # Job 1 - Clone local
+  cloneLocal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone local
+        uses: actions/checkout@v3

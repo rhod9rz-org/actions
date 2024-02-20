@@ -1,0 +1,27 @@
+name: 2-CLONE-REMOTE
+
+on:
+  push:
+    branches:
+      - develop
+      # - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+
+jobs:
+
+  # Job 1 - Clone remote
+  cloneRemote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone remote
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repository: rhod9rz-org/remote

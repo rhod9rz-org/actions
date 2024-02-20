@@ -1,0 +1,30 @@
+name: FAIL
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+
+
+jobs:
+
+  # Job 1 - Create a job that purposely fails.
+  fail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run a step that fails
+        run: |
+          if [ "A" != "B" ]; then
+            echo "A is not equal to B"
+            exit 1
+          fi
