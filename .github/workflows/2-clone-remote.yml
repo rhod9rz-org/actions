@@ -25,3 +25,6 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
           repository: rhod9rz-org/remote
+      - name: Verify repo
+        run: |
+          git remote get-url origin
