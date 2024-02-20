@@ -55,8 +55,8 @@ jobs:
           git add . && git commit -m "$PR_BODY"
           git push -u origin "feature/image-version-update-${timestamp}"
 
-          PR=$(gh pr create --title "PR_TITLE [AUTOMATED]" \
-                            --body "PR_BODY" \
+          PR=$(gh pr create --title "$PR_TITLE [AUTOMATED]" \
+                            --body "$PR_BODY" \
                             --reviewer $PR_REVIEWER_ID)
-          echo $PR
+          # echo $PR
           # echo "pr-url=$(echo $PR)" >> $GITHUB_OUTPUT
