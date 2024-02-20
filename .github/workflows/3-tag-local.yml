@@ -27,5 +27,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          git tag test-tag-$(date +%s)
+          timestamp=$(date +'%y%m%d-%H%M')
+          git tag test-tag-${timestamp}
           git push origin --tags
