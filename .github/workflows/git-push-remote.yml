@@ -1,10 +1,10 @@
-name: GIT-PUSH
+name: GIT-PUSH-REMOTE
 
 on:
   push:
     branches:
       - develop
-      - main
+      # - main
   pull_request:
     branches:
       - main
