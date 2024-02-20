@@ -21,7 +21,7 @@ jobs:
   prOnLocalRepo:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone with PAT - Actions
+      - name: Clone local
         uses: actions/checkout@v3
       - name: Create a pr
         env:
