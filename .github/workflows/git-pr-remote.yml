@@ -33,8 +33,6 @@ jobs:
           IMAGE_VERSION: ${{ github.run_id}}
           PR_REVIEWER_ID: "rhod3rz"
         run: |
-          env
-
           gh auth status
           gh auth setup-git
           timestamp=$(date +'%y%m%d-%H%M')
@@ -43,7 +41,6 @@ jobs:
           git config --global user.email "rhod3rz@example.com"
           git config --global user.name "rhod3rz"
 
-          echo "$GITHUB_RUN_ID"
           echo "IMAGE_VERSION=$IMAGE_VERSION"
           echo "COMMIT_MESSAGE=$COMMIT_MESSAGE - ${timestamp}"
           PR_TITLE=$(echo "$COMMIT_MESSAGE ${timestamp}" | head -n 1)
@@ -54,8 +51,8 @@ jobs:
           $PR_BODY"
           echo "PR_BODY=$PR_BODY"
 
-          # git add . && git commit -m "PR_BODY"
-          # git push -u origin "feature/image-version-update-${timestamp}"
+          git add . && git commit -m "$PR_BODY"
+          git push -u origin "feature/image-version-update-${timestamp}"
 
           # PR=$(gh pr create --title "PR_TITLE [AUTOMATED]") \
           #                   --body "PR_BODY" \
