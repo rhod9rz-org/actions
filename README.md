@@ -3,21 +3,11 @@
 240215-1306  
 240215-1304  
 
-# For TAGS Action
+# Owner vs Member
 
-### Baseline
-RHOD9RZ = Owner  
-RHOD9RZ_ALL_PERMS >> Tag Allowed  
-RHOD9RZ_ALL_REPO  >> Tag Allowed  
-
-### Service Account
-RHOD3RZ = Owner  
-RHOD3RZ_ALL_PERMS >> Tag Allowed  
-RHOD3RZ_ALL_REPO  >> Tag Allowed  
-
-RHOD3RZ = Member  
-RHOD3RZ_ALL_PERMS >> Tag Denied  
-RHOD3RZ_ALL_REPO  >> Tag Denied  
-
-RHOD3RZ = Member + Added with 'Write' role on repo  
-RHOD3RZ_ALL_REPO  >> Tag Allowed  
+| Type | Clone | Tag | Push | PR | Notes |
+|---|---|---|---|---|---|
+| Owner | Allowed | Allowed | Allowed | Allowed | Baseline |
+| Member | Denied | Denied | Denied | Denied | Changing to member |
+| Owner | Allowed | Allowed | Allowed | Allowed | Rolling back to member |
+| Member + Write | Allowed | Allowed | Allowed | Allowed | Changing to member + write permissions on the repo |
