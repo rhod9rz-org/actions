@@ -29,7 +29,7 @@ jobs:
       - name: Create a pr
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }} # GH_TOKEN to authenticate with gh cli | GITHUB_TOKEN to authenticate with github actions.
-          COMMIT_MESSAGE: "Commit Message"
+          COMMIT_MESSAGE: "rdzCommitMessage"
           IMAGE_VERSION: ${{ github.GITHUB_RUN_ID}}
           PR_REVIEWER_ID: "rhod3rz"
         run: |
@@ -41,10 +41,11 @@ jobs:
           git config --global user.email "rhod3rz@example.com"
           git config --global user.name "rhod3rz"
 
-          echo "COMMIT_MESSAGE=$COMMIT_MESSAGE ${timestamp}"
+          echo "COMMIT_MESSAGE=$COMMIT_MESSAGE - ${timestamp}"
           PR_TITLE=$(echo "$COMMIT_MESSAGE ${timestamp}" | head -n 1)
           echo "PR_TITLE=$PR_TITLE"
-          # PR_BODY=$(echo "COMMIT_MESSAGE ${timestamp}" | tail -n +2)
+          PR_BODY=$(echo "COMMIT_MESSAGE ${timestamp}" | tail -n +2)
+          echo "PR_BODY=$PR_BODY"
           # PR_BODY="Update VM inage version number -> $IMAGE_VERSION
           # Some Text: Rhodri
           # $PR_BODY"
